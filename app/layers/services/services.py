@@ -13,8 +13,12 @@ def getAllImages():
     lista_cards=[]
     for dato in lista_imagenes_crudas:    # 2) convertir cada img. en una card.
         card=translator.fromRequestIntoCard(dato)
-        lista_cards.append(card)
-    # 3) añadirlas a un nuevo listado que, finalmente, se retornará con todas las card encontradas.
+        tipos=[]
+        tipos_cartas= card.types
+        for tipo in tipos_cartas:
+            tipos.append(get_type_icon_url_by_name(tipo))
+        card.types_imgs=tipos
+        lista_cards.append(card)# 3) añadirlas a un nuevo listado que, finalmente, se retornará con todas las card encontradas.
     return lista_cards
 
 # función que filtra según el nombre del pokemon.
