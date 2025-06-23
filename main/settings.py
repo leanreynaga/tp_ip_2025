@@ -1,5 +1,14 @@
 import os
 from pathlib import Path
+#Para que Django pueda mandar mails
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+#se toma un mail host para mandarles el mail de la confirmacion a los usuarios
+EMAIL_HOST_USER = 'federicoveizaga84@gmail.com'
+EMAIL_HOST_PASSWORD = 'xsct dhuw zzku roga'
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
