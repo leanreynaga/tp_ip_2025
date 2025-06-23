@@ -4,7 +4,7 @@ from django.conf import settings
 
 class Favourite(models.Model):
     # Detalles del pokemon.
-    id = models.IntegerField(primary_key=True, blank=True) #ID de pokeapi
+    poke_id = models.IntegerField(null=True, blank=True) #ID de pokeapi
     name = models.CharField(max_length=200)  # Nombre del personaje
     height = models.CharField(max_length=200)  # Altura
     weight = models.CharField(max_length=200)  # Peso
@@ -17,7 +17,7 @@ class Favourite(models.Model):
 
     class Meta:
         # Restringe duplicados: un mismo usuario no puede guardar el mismo personaje varias veces.
-        unique_together = (('user', 'name'),)
+        unique_together = (('user', 'poke_id'),)
 
     def __str__(self):
         return (f"{self.name} - Altura: {self.height if self.height else 'Desconocida'} "

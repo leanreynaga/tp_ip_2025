@@ -8,6 +8,8 @@ from django.contrib.auth import authenticate, login#importacion de funciones y c
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.conf import settings
+from .models import Favourite
+import ast
 
 def register_view(request):
     mensaje = ''
@@ -55,6 +57,8 @@ def home(request):
     lista_cards=services.getAllImages()
     images = []
     favourite_list = []
+    if request.user.is_authenticated:
+        favourite_list = [fav.id for fav in Favourite.objects.filter(user=request.user)]
     for card in lista_cards:
         images.append(card)
     return render(request, 'home.html', { 'images': images, 'favourite_list': favourite_list })
@@ -87,15 +91,46 @@ def filter_by_type(request):
 # Estas funciones se usan cuando el usuario está logueado en la aplicación.
 @login_required
 def getAllFavouritesByUser(request):
-    pass
+    favs = Favourite.objects.filter(user=request.user)
+    return render(request, 'favourites.html', {'favourite_list': favs})
 
 @login_required
 def saveFavourite(request):
-    pass
+    if request.method == 'POST':
+        user = request.user
+        poke_id = request.POST.get('id')
+        name = request.POST.get('name')
+        height = request.POST.get('height')
+        weight = request.POST.get('weight')
+        types = request.POST.get('types')  # viene como string
+        image = request.POST.get('image')
+        # Convertir el string de tipos en lista (si viene como string tipo Python)
+        try:
+            types_list = ast.literal_eval(types)
+        except:
+            types_list = [types]  # fallback por si viene como solo un string
+
+        try:
+            Favourite.objects.create(
+                poke_id=poke_id,
+                name=name,
+                height=height,
+                weight=weight,
+                types=types_list,
+                image=image,
+                user=user
+            )
+        except:
+            pass  # evitar duplicados
+
+    return redirect('home')
 
 @login_required
 def deleteFavourite(request):
-    pass
+    if request.method == 'POST':
+        poke_id = request.POST.get('id')
+        Favourite.objects.filter(user=request.user, id=poke_id).delete()
+    return redirect('favoritos')
 
 @login_required
 def exit(request):
