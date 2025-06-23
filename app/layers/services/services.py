@@ -24,10 +24,10 @@ def getAllImages():
 # función que filtra según el nombre del pokemon.
 def filterByCharacter(name):
     filtered_cards = []
-
+    name=name.lower()
     for card in getAllImages():
-        # debe verificar si el name está contenido en el nombre de la card, antes de agregarlo al listado de filtered_cards.
-        filtered_cards.append(card)
+        if name in card.name:  # debe verificar si el name está contenido en el nombre de la card, antes de agregarlo al listado de filtered_cards.
+            filtered_cards.append(card)
 
     return filtered_cards
 
