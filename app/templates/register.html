@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Registro - Pokedéx</title>
+</head>
+<body>
+  <h2>Registro de nuevo usuario</h2>
+  {% if mensaje %}
+    <p style="color:red;">{{ mensaje }}</p>
+  {% endif %}
+  <form method="post">
+    {% csrf_token %}
+    <label>Nombre:</label><br>
+    <input type="text" name="first_name" required><br><br>
+
+    <label>Apellido:</label><br>
+    <input type="text" name="last_name" required><br><br>
+
+    <label>Usuario:</label><br>
+    <input type="text" name="username" required><br><br>
+
+    <label>Correo electrónico:</label><br>
+    <input type="email" name="email" required><br><br>
+
+    <label>Contraseña:</label><br>
+    <input type="password" name="password" required><br><br>
+
+    <button type="submit">Registrarse</button>
+  </form>
+
+  <p><a href="{% url 'login' %}">Volver a Login</a></p>
+</body>
+</html>

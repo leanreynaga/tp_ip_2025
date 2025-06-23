@@ -4,7 +4,6 @@ from . import views
 
 urlpatterns = [
     path('', views.index_page, name='index-page'),
-    path('login/', views.index_page, name='login'),
     path('home/', views.home, name='home'),
     
     path('buscar/', views.search, name='buscar'),
@@ -15,4 +14,5 @@ urlpatterns = [
     path('favourites/delete/', views.deleteFavourite, name='borrar-favorito'),
 
     path('exit/', views.exit, name='exit'),
+    path('register/', views.register_view, name='register'),#muestra el formulario de registro para nuevos usuarios.
 ]
